@@ -1,66 +1,69 @@
-import React, { useEffect, useState } from "react";
-import Fab from '@mui/material/Fab';
-import AddIcon from '@mui/icons-material/Add';
-import EditIcon from '@mui/icons-material/Edit';
+import React, { useEffect, useState, useContext } from "react";
+import Fab from "@mui/material/Fab";
+import AddIcon from "@mui/icons-material/Add";
+import EditIcon from "@mui/icons-material/Edit";
+import NotesContext from "../context/NotesContext";
 
-const CreateArea = ({onAdd, onUpdate, notes, editId}) =>{
+const CreateArea = () => {
+    const { notes, addNotes, updateNote, editId } = useContext(NotesContext);
+
     const [note, setNote] = useState({
-        title:"",
-        content:""
-    })
+        title: "",
+        content: "",
+    });
 
     const [isExpanded, setIsExpanded] = useState(false);
 
-    useEffect(()=>{
-        if(editId !== null) {
-            const {title,content} = notes[editId];
+    useEffect(() => {
+        if (editId !== null) {
+            const { title, content } = notes[editId];
 
             setNote({
                 title,
-                content
-            })
+                content,
+            });
 
             setIsExpanded(true);
         }
-    },[editId, notes]);
+    }, [editId, notes]);
 
     const handleExpanded = () => {
         setIsExpanded(true);
-    }
+    };
 
-    const handleChange = (event) =>{
-        const {name, value} = event.target;
+    const handleChange = (event) => {
+        const { name, value } = event.target;
 
-        setNote((prevNote) =>{
+        setNote((prevNote) => {
             return {
                 ...prevNote,
-                [name] : value
-            }
-        })
-    }
+                [name]: value,
+            };
+        });
+    };
 
     const submitNote = (event) => {
         event.preventDefault();
 
-        if(editId !== null) {
-            onUpdate(editId, note);
+        if (editId !== null) {
+            updateNote(editId, note);
 
             setNote({
-                title:"",
-                content:""
-            })
+                title: "",
+                content: "",
+            });
 
             setIsExpanded(false);
             return;
-        } 
+        }
 
-        onAdd(note);
+        addNotes(note);
         setNote({
-            title:"",
-            content:""
+            title: "",
+            content: "",
         });
         setIsExpanded(false);
-    }
+    };
 
     return (
         <form className="create-note">
@@ -82,11 +85,15 @@ const CreateArea = ({onAdd, onUpdate, notes, editId}) =>{
                 value={note.content}
                 onClick={handleExpanded}
             />
-            <Fab color="primary" aria-label={editId !== null ? "Edit": "Add" } onClick={submitNote}>
-              {editId !== null ? <EditIcon/>  : <AddIcon />}
+            <Fab
+                color="primary"
+                aria-label={editId !== null ? "Edit" : "Add"}
+                onClick={submitNote}
+            >
+                {editId !== null ? <EditIcon /> : <AddIcon />}
             </Fab>
         </form>
     );
-}
+};
 
 export default CreateArea;
