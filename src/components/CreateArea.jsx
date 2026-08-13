@@ -5,7 +5,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import NotesContext from "../context/NotesContext";
 
 const CreateArea = () => {
-    const { notes, addNotes, updateNote, editId } = useContext(NotesContext);
+    const { editingNote, addNotes, updateNote, editId } = useContext(NotesContext);
 
     const [note, setNote] = useState({
         title: "",
@@ -15,8 +15,8 @@ const CreateArea = () => {
     const [isExpanded, setIsExpanded] = useState(false);
 
     useEffect(() => {
-        if (editId !== null) {
-            const { title, content } = notes[editId];
+        if (editingNote) {
+            const { title, content } = editingNote;
 
             setNote({
                 title,
@@ -25,7 +25,7 @@ const CreateArea = () => {
 
             setIsExpanded(true);
         }
-    }, [editId, notes]);
+    }, [editId]);
 
     const handleExpanded = () => {
         setIsExpanded(true);

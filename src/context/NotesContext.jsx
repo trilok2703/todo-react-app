@@ -38,8 +38,10 @@ const NotesProvider = ({children}) => {
         setEditId(null);
     };
 
+    const editingNote = editId !=null ? notes[editId] : null;
+
     return (
-        <NotesContext.Provider value={{notes, addNotes, deleteNote, startEdit, updateNote, editId}}>
+        <NotesContext.Provider value={{notes, addNotes, deleteNote, startEdit, updateNote, editId, editingNote}}>
             {children}
         </NotesContext.Provider>
     )
