@@ -8,3 +8,30 @@ This is Todo App demo.
 
 
 
+## Application Architecture
+
+If you want a more compact diagram for the README, I'd actually recommend this:
+
+```text
+                    ┌─────────────┐
+                    │   App.jsx   │
+                    └──────┬──────┘
+                           │
+                           ▼
+                 ┌──────────────────┐
+                 │  NotesProvider   │
+                 │  (Context API)   │
+                 └────────┬─────────┘
+                          │
+          ┌───────────────┼────────────────┐
+          │               │                │
+          ▼               ▼                ▼
+     CreateArea        NoteList           Header
+          │               │
+          │               ▼
+          │             Note
+          │
+          └────── uses Context ──────┘
+
+       State + Actions are managed
+             by NotesProvider
