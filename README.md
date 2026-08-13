@@ -10,8 +10,6 @@ This is Todo App demo.
 
 ## Application Architecture
 
-If you want a more compact diagram for the README, I'd actually recommend this:
-
 ```text
                     ┌─────────────┐
                     │   App.jsx   │
