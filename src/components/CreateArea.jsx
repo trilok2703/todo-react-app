@@ -12,6 +12,8 @@ const CreateArea = () => {
         content: "",
     });
 
+    const [error, setError] = useState("");
+
     const [isExpanded, setIsExpanded] = useState(false);
 
     useEffect(() => {
@@ -34,6 +36,10 @@ const CreateArea = () => {
     const handleChange = (event) => {
         const { name, value } = event.target;
 
+        if(name === "title") {
+            setError("");
+        }
+
         setNote((prevNote) => {
             return {
                 ...prevNote,
@@ -44,6 +50,12 @@ const CreateArea = () => {
 
     const submitNote = (event) => {
         event.preventDefault();
+
+        if(note.title.trim() === ""){
+            setError("Title is required");
+            setIsExpanded(true);
+            return;
+        }
 
         if (editId !== null) {
             updateNote(editId, note);
@@ -68,13 +80,21 @@ const CreateArea = () => {
     return (
         <form className="create-note">
             {isExpanded && (
-                <input
-                    name="title"
-                    type="text"
-                    placeholder="Title"
-                    onChange={handleChange}
-                    value={note.title}
-                />
+                <>
+                    <input
+                        name="title"
+                        type="text"
+                        placeholder="Title"
+                        onChange={handleChange}
+                        value={note.title}
+                    />
+                    {error && (
+                        <p className="error-message">
+                            {error}
+                        </p>
+                    )}
+                </>
+                
             )}
 
             <textarea

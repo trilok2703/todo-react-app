@@ -108,3 +108,10 @@ footer {
     height: 2.5em;
     color: #ccc;
 }
+
+.error-message {
+    color: #d32f2f;
+    font-size: 13px;
+    font-weight: 600;
+    margin: 2px 0 4px 0;
+}
