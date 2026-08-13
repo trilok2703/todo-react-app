@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
-import EditIcon from "@mui/icons-material/Edit";
+import UpdateIcon from '@mui/icons-material/Update';
 import NotesContext from "../context/NotesContext";
 
 const CreateArea = () => {
@@ -107,10 +107,10 @@ const CreateArea = () => {
             />
             <Fab
                 color="primary"
-                aria-label={editId !== null ? "Edit" : "Add"}
+                aria-label={editId !== null ? "update" : "Add"}
                 onClick={submitNote}
             >
-                {editId !== null ? <EditIcon /> : <AddIcon />}
+                {editId !== null ? <UpdateIcon/>: <AddIcon />}
             </Fab>
         </form>
     );
