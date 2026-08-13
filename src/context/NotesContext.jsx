@@ -2,7 +2,7 @@ import { createContext, useState } from "react";
 
 const NotesContext = createContext();
 
-const NotesProvider = ({children}) => {
+const NotesProvider = ({ children }) => {
     const [notes, setNotes] = useState([]);
     const [editId, setEditId] = useState(null);
 
@@ -20,9 +20,13 @@ const NotesProvider = ({children}) => {
         });
     };
 
-     const startEdit = (id) => {
+    const startEdit = (id) => {
         setEditId(id);
     };
+
+    const cancelEdit = () =>{
+        setEditId(null);
+    }
 
     const updateNote = (editId, updatedNote) => {
         setNotes((prevNotes) => {
@@ -38,14 +42,25 @@ const NotesProvider = ({children}) => {
         setEditId(null);
     };
 
-    const editingNote = editId !=null ? notes[editId] : null;
+    const editingNote = editId != null ? notes[editId] : null;
 
     return (
-        <NotesContext.Provider value={{notes, addNotes, deleteNote, startEdit, updateNote, editId, editingNote}}>
+        <NotesContext.Provider
+            value={{
+                notes,
+                addNotes,
+                deleteNote,
+                startEdit,
+                updateNote,
+                editId,
+                editingNote,
+                cancelEdit
+            }}
+        >
             {children}
         </NotesContext.Provider>
-    )
-}
+    );
+};
 
-export {NotesProvider};
+export { NotesProvider };
 export default NotesContext;

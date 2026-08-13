@@ -40,18 +40,11 @@ form.create-note textarea {
     resize: none;
 }
 
-form.create-note button {
-    position: absolute;
-    right: 18px;
-    bottom: -18px;
+form.create-note .MuiFab-root {
     background: #f5ba13;
     color: #fff;
-    border: none;
-    cursor: pointer;
     width: 36px;
     height: 36px;
-    border-radius: 50%;
-    outline: none;
     box-shadow: 0 1px 3px 0 rgba(0,0,0,0.3);
 }
 
@@ -114,4 +107,32 @@ footer {
     font-size: 13px;
     font-weight: 600;
     margin: 2px 0 4px 0;
+}
+
+.note-actions {
+    position: absolute;
+    right: 18px;
+    bottom: -18px;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.cancel-edit-btn {
+    padding: 6px 10px;
+    border: none;
+    background: #f5ba13;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+.cancel-edit-btn:hover {
+    color: #ccc;
+    text-decoration: underline;
 }

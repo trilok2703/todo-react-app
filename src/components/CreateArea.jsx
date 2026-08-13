@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useContext } from "react";
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
-import UpdateIcon from '@mui/icons-material/Update';
+import UpdateIcon from "@mui/icons-material/Update";
 import NotesContext from "../context/NotesContext";
 
 const CreateArea = () => {
-    const { editingNote, addNotes, updateNote, editId } = useContext(NotesContext);
+    const { editingNote, addNotes, updateNote, editId, cancelEdit } =
+        useContext(NotesContext);
 
     const [note, setNote] = useState({
         title: "",
@@ -36,7 +37,7 @@ const CreateArea = () => {
     const handleChange = (event) => {
         const { name, value } = event.target;
 
-        if(name === "title") {
+        if (name === "title") {
             setError("");
         }
 
@@ -51,7 +52,7 @@ const CreateArea = () => {
     const submitNote = (event) => {
         event.preventDefault();
 
-        if(note.title.trim() === ""){
+        if (note.title.trim() === "") {
             setError("Title is required");
             setIsExpanded(true);
             return;
@@ -77,6 +78,13 @@ const CreateArea = () => {
         setIsExpanded(false);
     };
 
+    const handleCancel = () => {
+        cancelEdit();
+
+        setNote({title:"",content:""});
+        setIsExpanded(false);
+    }
+
     return (
         <form className="create-note">
             {isExpanded && (
@@ -88,13 +96,8 @@ const CreateArea = () => {
                         onChange={handleChange}
                         value={note.title}
                     />
-                    {error && (
-                        <p className="error-message">
-                            {error}
-                        </p>
-                    )}
+                    {error && <p className="error-message">{error}</p>}
                 </>
-                
             )}
 
             <textarea
@@ -105,13 +108,19 @@ const CreateArea = () => {
                 value={note.content}
                 onClick={handleExpanded}
             />
-            <Fab
-                color="primary"
-                aria-label={editId !== null ? "update" : "Add"}
-                onClick={submitNote}
-            >
-                {editId !== null ? <UpdateIcon/>: <AddIcon />}
-            </Fab>
+            <div className="note-actions">
+                <Fab
+                    color="primary"
+                    aria-label={editId !== null ? "update" : "Add"}
+                    onClick={submitNote}
+                >
+                    {editId !== null ? <UpdateIcon /> : <AddIcon />}
+                </Fab>
+
+                {editId !== null && (
+                    <button type="button" onClick={handleCancel} className="cancel-edit-btn">Cancel</button>
+                )}
+            </div>
         </form>
     );
 };
