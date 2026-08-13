@@ -1,15 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
 
-const CreateArea = ({onAdd}) =>{
-
+const CreateArea = ({onAdd, onUpdate, notes, editId}) =>{
     const [note, setNote] = useState({
         title:"",
         content:""
     })
 
     const [isExpanded, setIsExpanded] = useState(false);
+
+    useEffect(()=>{
+        if(editId !== null) {
+            const {title,content} = notes[editId];
+
+            setNote({
+                title,
+                content
+            })
+
+            setIsExpanded(true);
+        }
+    },[editId, notes]);
 
     const handleExpanded = () => {
         setIsExpanded(true);
@@ -27,12 +40,26 @@ const CreateArea = ({onAdd}) =>{
     }
 
     const submitNote = (event) => {
+        event.preventDefault();
+
+        if(editId !== null) {
+            onUpdate(editId, note);
+
+            setNote({
+                title:"",
+                content:""
+            })
+
+            setIsExpanded(false);
+            return;
+        } 
+
         onAdd(note);
         setNote({
             title:"",
             content:""
         });
-        event.preventDefault();
+        setIsExpanded(false);
     }
 
     return (
@@ -55,8 +82,8 @@ const CreateArea = ({onAdd}) =>{
                 value={note.content}
                 onClick={handleExpanded}
             />
-            <Fab color="primary" aria-label="add" onClick={submitNote}>
-                <AddIcon />
+            <Fab color="primary" aria-label={editId !== null ? "Edit": "Add" } onClick={submitNote}>
+              {editId !== null ? <EditIcon/>  : <AddIcon />}
             </Fab>
         </form>
     );

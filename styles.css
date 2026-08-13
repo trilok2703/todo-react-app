@@ -77,10 +77,22 @@ form.create-note button {
     word-wrap: break-word;
 }
 
-.delete-note-btn {
+.note-btn-container {
     position: relative;
     float: right;
     margin-right: 10px;
+}
+
+.edit-note-btn {
+    color: #f5ba13;
+    border: none;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    margin-right:10px;
+}
+
+.delete-note-btn {
     color: #f5ba13;
     border: none;
     width: 36px;

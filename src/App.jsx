@@ -8,6 +8,7 @@ import Footer from './components/Footer';
 function App() {
 
   const [notes, setNotes] = useState([]);
+  const [editId, setEditId] = useState(null);
 
   const addNotes = (newNote) => {
     setNotes((prevNotes)=>{
@@ -23,16 +24,46 @@ function App() {
     })
   }
 
+  const startEdit = (id) =>{
+    setEditId(id);
+  }
+
+  const startUpdate = (editId, updatedNote) => {
+    setNotes((prevNotes) => {
+      return prevNotes.map((notes,index) => {
+        if(index == editId) {
+          return updatedNote;
+        }
+
+        return notes;
+      })
+    })
+
+    setEditId(null);
+  }
   return (
-   <>
-   <Header/>
-   <CreateArea onAdd={addNotes}/>
-   <div>
-      {notes.map((noteItem,index) => <Note key={index} id={index} data={noteItem} onDelete={deleteNote}/>)}
-   </div>
-    <Footer/>
-   </>
-  )
+      <>
+          <Header />
+          <CreateArea
+              onAdd={addNotes}
+              onUpdate={startUpdate}
+              notes={notes}
+              editId={editId}
+          />
+          <div>
+              {notes.map((noteItem, index) => (
+                  <Note
+                      key={index}
+                      id={index}
+                      data={noteItem}
+                      onDelete={deleteNote}
+                      onEdit={startEdit}
+                  />
+              ))}
+          </div>
+          <Footer />
+      </>
+  );
 }
 
 export default App
