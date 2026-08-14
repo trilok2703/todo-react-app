@@ -1,12 +1,12 @@
-import React, { useEffect, useState, useContext, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 import UpdateIcon from "@mui/icons-material/Update";
-import NotesContext from "../context/NotesContext";
+import useNotes from "../hooks/useNotes";
 
 const CreateArea = () => {
     const { editingNote, addNotes, updateNote, editId, cancelEdit } =
-        useContext(NotesContext);
+        useNotes();
 
     const [note, setNote] = useState({
         title: "",

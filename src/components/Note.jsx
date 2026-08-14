@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
+import React from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Fab from "@mui/material/Fab";
 import EditIcon from "@mui/icons-material/Edit";
-import NotesContext from "../context/NotesContext";
+import useNotes from "../hooks/useNotes";
 
 const Note = ({ data, id }) => {
-    const { deleteNote, startEdit } = useContext(NotesContext);
+    const { deleteNote, startEdit } = useNotes();
 
     const { title, content } = data;
 

@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
-import NotesContext from "../context/NotesContext";
+import React from "react";
 import Note from "./Note";
+import useNotes from "../hooks/useNotes";
 
 const NoteList = () => {
-    const { notes } = useContext(NotesContext);
+    const { notes } = useNotes();
 
     return (
         <div>
