@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 import UpdateIcon from "@mui/icons-material/Update";
@@ -16,6 +16,7 @@ const CreateArea = () => {
     const [error, setError] = useState("");
 
     const [isExpanded, setIsExpanded] = useState(false);
+    const inputRef = useRef(null);
 
     useEffect(() => {
         if (editingNote) {
@@ -33,6 +34,12 @@ const CreateArea = () => {
     const handleExpanded = () => {
         setIsExpanded(true);
     };
+
+    useEffect(()=>{
+        if(isExpanded && inputRef.current) {
+            inputRef.current.focus();
+        }
+    },[isExpanded]);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -95,6 +102,7 @@ const CreateArea = () => {
                         placeholder="Title"
                         onChange={handleChange}
                         value={note.title}
+                        ref={inputRef}
                     />
                     {error && <p className="error-message">{error}</p>}
                 </>
